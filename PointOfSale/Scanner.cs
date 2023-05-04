@@ -1,6 +1,12 @@
 ﻿namespace PointOfSale;
 public class Scanner {
-    public void Scan(string input) {
+    private readonly SaleOrder order;
 
+    public Scanner(SaleOrder order) {
+        this.order = order;
+    }
+
+    public void Scan(string input) {
+        order.AddItem(input);
     }
 }

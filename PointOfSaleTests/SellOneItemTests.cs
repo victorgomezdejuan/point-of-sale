@@ -5,12 +5,12 @@ namespace PointOfSaleTests;
 public class SellOneItemTests {
     [Fact]
     public void EmptyCode() {
-        Scanner scanner = new();
         Display display = new();
-        SaleOrder order = new(scanner, display);
+        SaleOrder order = new(display);
+        Scanner scanner = new(order);
 
         scanner.Scan("");
 
-        Assert.Equal("Error: Empty code", display.GetText());
+        Assert.Equal("Error: Empty code", display.Text);
     }
 }

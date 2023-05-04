@@ -1,6 +1,8 @@
 ﻿namespace PointOfSale;
 public class Display {
-    public string GetText() {
-        return "Error: Empty code";
+    public string Text { get; private set; }
+
+    internal void SetText(string text) {
+        Text = text;
     }
 }
