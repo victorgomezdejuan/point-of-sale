@@ -14,8 +14,11 @@ public class SaleOrderHandler {
         if (string.IsNullOrEmpty(input)) {
             display.DisplayContent("Error: Empty code");
         }
-        else if (input.Length != 13 || !int.TryParse(input, out _)) {
+        else if (input.Length != 13 || !long.TryParse(input, out _)) {
             display.DisplayContent("Error: Invalid code");
+        }
+        else {
+            display.DisplayContent("5.25 €");
         }
     }
 }

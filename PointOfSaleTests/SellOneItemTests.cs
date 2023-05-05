@@ -38,4 +38,16 @@ public class SellOneItemTests {
 
         Assert.Equal("Error: Invalid code", display.Text);
     }
+
+    [Fact]
+    public void ProductFound() {
+        Display display = new();
+        Scanner scanner = new();
+        SaleOrderHandler handler = new(scanner, display);
+
+        scanner.Scan("1234567890123");
+        handler.Submit();
+
+        Assert.Equal("5.25 €", display.Text);
+    }
 }
