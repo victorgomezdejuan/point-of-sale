@@ -1,16 +1,18 @@
 ﻿namespace PointOfSale;
-public class SaleOrder {
+public class SaleOrderHandler {
     private Scanner scanner;
     private Display display;
-    private string itemId;
 
-    public SaleOrder(Display display) {
+    public SaleOrderHandler(Scanner scanner, Display display) {
+        this.scanner = scanner;
         this.display = display;
     }
 
-    internal void AddItem(string input) {
+    public void Submit() {
+        string input = scanner.Input;
+
         if (string.IsNullOrEmpty(input)) {
-            display.SetText("Error: Empty code");
+            display.DisplayContent("Error: Empty code");
         }
     }
 }

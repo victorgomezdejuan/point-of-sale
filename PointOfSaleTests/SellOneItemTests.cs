@@ -6,10 +6,11 @@ public class SellOneItemTests {
     [Fact]
     public void EmptyCode() {
         Display display = new();
-        SaleOrder order = new(display);
-        Scanner scanner = new(order);
+        Scanner scanner = new();
+        SaleOrderHandler handler = new(scanner, display);
 
         scanner.Scan("");
+        handler.Submit();
 
         Assert.Equal("Error: Empty code", display.Text);
     }

@@ -2,7 +2,7 @@
 public class Display {
     public string Text { get; private set; }
 
-    internal void SetText(string text) {
+    internal void DisplayContent(string text) {
         Text = text;
     }
 }
