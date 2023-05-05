@@ -3,12 +3,22 @@ using PointOfSale;
 namespace PointOfSaleTests;
 
 public class SellOneItemTests {
+    private readonly Dictionary<string, string> pricesByProductCode;
+    private readonly Display display;
+    private readonly Scanner scanner;
+    private readonly SaleOrderHandler handler;
+
+    public SellOneItemTests() {
+        pricesByProductCode = new() {
+            { "1234567890123", "5.25 €" }
+        };
+        display = new();
+        scanner = new();
+        handler = new(scanner, display, pricesByProductCode);
+    }
+
     [Fact]
     public void EmptyCode() {
-        Display display = new();
-        Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display, null);
-
         scanner.Scan("");
         handler.Submit();
 
@@ -17,10 +27,6 @@ public class SellOneItemTests {
 
     [Fact]
     public void InvalidCode_Length() {
-        Display display = new();
-        Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display, null);
-
         scanner.Scan(new string('1', 12));
         handler.Submit();
 
@@ -29,10 +35,6 @@ public class SellOneItemTests {
 
     [Fact]
     public void InvalidCode_NoInteger() {
-        Display display = new();
-        Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display, null);
-
         scanner.Scan(new string('a', 13));
         handler.Submit();
 
@@ -41,13 +43,6 @@ public class SellOneItemTests {
 
     [Fact]
     public void ProductFound() {
-        Dictionary<string, string> pricesByProductCode = new() {
-            { "1234567890123", "5.25 €" }
-        };
-        Display display = new();
-        Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display, pricesByProductCode);
-
         scanner.Scan("1234567890123");
         handler.Submit();
 
@@ -56,14 +51,9 @@ public class SellOneItemTests {
 
     [Fact]
     public void ProductNotFound() {
-        Dictionary<string, string> pricesByProductCode = new() {
-            { "1234567890123", "5.25 €" }
-        };
-        Display display = new();
-        Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display, pricesByProductCode);
         scanner.Scan("1234567890124");
         handler.Submit();
+
         Assert.Equal("Error: Product not found", display.Text);
     }
 }
