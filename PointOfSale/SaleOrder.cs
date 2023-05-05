@@ -14,5 +14,8 @@ public class SaleOrderHandler {
         if (string.IsNullOrEmpty(input)) {
             display.DisplayContent("Error: Empty code");
         }
+        else if (input.Length != 13 || !int.TryParse(input, out _)) {
+            display.DisplayContent("Error: Invalid code");
+        }
     }
 }
