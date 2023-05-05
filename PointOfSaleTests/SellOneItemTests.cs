@@ -7,7 +7,7 @@ public class SellOneItemTests {
     public void EmptyCode() {
         Display display = new();
         Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display);
+        SaleOrderHandler handler = new(scanner, display, null);
 
         scanner.Scan("");
         handler.Submit();
@@ -19,7 +19,7 @@ public class SellOneItemTests {
     public void InvalidCode_Length() {
         Display display = new();
         Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display);
+        SaleOrderHandler handler = new(scanner, display, null);
 
         scanner.Scan(new string('1', 12));
         handler.Submit();
@@ -31,7 +31,7 @@ public class SellOneItemTests {
     public void InvalidCode_NoInteger() {
         Display display = new();
         Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display);
+        SaleOrderHandler handler = new(scanner, display, null);
 
         scanner.Scan(new string('a', 13));
         handler.Submit();
@@ -41,9 +41,12 @@ public class SellOneItemTests {
 
     [Fact]
     public void ProductFound() {
+        Dictionary<string, string> pricesByProductCode = new() {
+            { "1234567890123", "5.25 €" }
+        };
         Display display = new();
         Scanner scanner = new();
-        SaleOrderHandler handler = new(scanner, display);
+        SaleOrderHandler handler = new(scanner, display, pricesByProductCode);
 
         scanner.Scan("1234567890123");
         handler.Submit();
