@@ -13,18 +13,13 @@ public class SaleOrderHandler {
     public void Submit() {
         string input = scanner.Input;
 
-
-        if (string.IsNullOrEmpty(input)) {
+        if (string.IsNullOrEmpty(input))
             display.DisplayContent("Error: Empty code");
-        }
-        else if (input.Length != 13 || !long.TryParse(input, out _)) {
+        else if (input.Length != 13 || !long.TryParse(input, out _))
             display.DisplayContent("Error: Invalid code");
-        }
-        else {
-            if (!pricesByProductCode.ContainsKey(input))
-                display.DisplayContent("Error: Product not found");
-            else
-                display.DisplayContent(pricesByProductCode[input]);
-        }
+        else if (!pricesByProductCode.ContainsKey(input))
+            display.DisplayContent("Error: Product not found");
+        else
+            display.DisplayContent(pricesByProductCode[input]);
     }
 }
