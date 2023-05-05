@@ -53,4 +53,17 @@ public class SellOneItemTests {
 
         Assert.Equal("5.25 €", display.Text);
     }
+
+    [Fact]
+    public void ProductNotFound() {
+        Dictionary<string, string> pricesByProductCode = new() {
+            { "1234567890123", "5.25 €" }
+        };
+        Display display = new();
+        Scanner scanner = new();
+        SaleOrderHandler handler = new(scanner, display, pricesByProductCode);
+        scanner.Scan("1234567890124");
+        handler.Submit();
+        Assert.Equal("Error: Product not found", display.Text);
+    }
 }

@@ -21,7 +21,10 @@ public class SaleOrderHandler {
             display.DisplayContent("Error: Invalid code");
         }
         else {
-            display.DisplayContent(pricesByProductCode[input]);
+            if (!pricesByProductCode.ContainsKey(input))
+                display.DisplayContent("Error: Product not found");
+            else
+                display.DisplayContent(pricesByProductCode[input]);
         }
     }
 }
