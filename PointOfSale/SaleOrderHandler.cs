@@ -1,8 +1,8 @@
 ﻿namespace PointOfSale;
 public class SaleOrderHandler {
     private readonly Dictionary<string, string> pricesByProductCode;
-    private Scanner scanner;
-    private Display display;
+    private readonly Scanner scanner;
+    private readonly Display display;
 
     public SaleOrderHandler(Scanner scanner, Display display, Dictionary<string, string> pricesByProductCode) {
         this.scanner = scanner;
