@@ -1,4 +1,4 @@
-﻿namespace PointOfSale;
+﻿namespace PointOfSale.Domain;
 public class Catalog {
     private readonly Dictionary<string, string> pricesByProductCode;
 

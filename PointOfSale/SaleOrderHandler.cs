@@ -1,4 +1,6 @@
-﻿namespace PointOfSale;
+﻿using PointOfSale.Domain;
+
+namespace PointOfSale;
 public class SaleOrderHandler {
     private readonly Catalog catalog;
     private readonly Scanner scanner;

@@ -1,4 +1,5 @@
 using PointOfSale;
+using PointOfSale.Domain;
 
 namespace PointOfSaleTests;
 
