@@ -4,17 +4,16 @@ using PointOfSale.Domain;
 namespace PointOfSaleTests;
 
 public class SellOneItemTests {
-    private readonly Dictionary<string, Product> pricesByProductCode;
     private readonly Display display;
     private readonly Scanner scanner;
     private readonly SaleOrderHandler handler;
 
     public SellOneItemTests() {
-        pricesByProductCode = new() {
-            { "1234567890123", new Product("1234567890123", new Price(5.25M, '€')) }
-        };
         display = new();
         scanner = new();
+        Dictionary<string, Product> pricesByProductCode = new() {
+            { "1234567890123", new Product("1234567890123", new Price(5.25M, '€')) }
+        };
         handler = new(scanner, display, new Catalog(pricesByProductCode));
     }
 

@@ -4,7 +4,7 @@ public class Catalog {
 
     public Catalog(Dictionary<string, Product> pricesByProductCode) => this.pricesByProductCode = pricesByProductCode;
 
-    public bool HasProduct(string input) => pricesByProductCode.ContainsKey(input);
+    public bool HasProduct(string code) => pricesByProductCode.ContainsKey(code);
 
-    public Price GetPriceByProductCode(string input) => pricesByProductCode[input].Price;
+    public Price GetPriceByProductCode(string code) => pricesByProductCode[code].Price;
 }
