@@ -14,23 +14,14 @@ public class SaleOrderHandler {
         string input = scanner.Input;
 
         if (string.IsNullOrEmpty(input))
-            DisplayEmptyCode();
+            display.DisplayEmptyCode();
         else if (input.Length != 13 || !long.TryParse(input, out _))
-            DisplayInvalidCode();
+            display.DisplayInvalidCode();
         else if (!pricesByProductCode.ContainsKey(input))
-            DisplayProductNotFound();
-        else {
-            DisplayPrice(GetPriceByProductCode(input));
-        }
+            display.DisplayProductNotFound();
+        else
+            display.DisplayPrice(GetPriceByProductCode(input));
     }
-
-    private void DisplayPrice(string formattedPrice) => display.DisplayContent(formattedPrice);
-
-    private void DisplayEmptyCode() => display.DisplayContent("Error: Empty code");
-
-    private void DisplayInvalidCode() => display.DisplayContent("Error: Invalid code");
-
-    private void DisplayProductNotFound() => display.DisplayContent("Error: Product not found");
 
     private string GetPriceByProductCode(string input) => pricesByProductCode[input];
 }
