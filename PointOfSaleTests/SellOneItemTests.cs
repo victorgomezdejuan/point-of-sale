@@ -14,7 +14,7 @@ public class SellOneItemTests {
         };
         display = new();
         scanner = new();
-        handler = new(scanner, display, pricesByProductCode);
+        handler = new(scanner, display, new Catalog(pricesByProductCode));
     }
 
     [Fact]

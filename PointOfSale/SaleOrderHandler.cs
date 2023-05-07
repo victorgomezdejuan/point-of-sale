@@ -1,27 +1,25 @@
 ﻿namespace PointOfSale;
 public class SaleOrderHandler {
-    private readonly Dictionary<string, string> pricesByProductCode;
+    private readonly Catalog catalog;
     private readonly Scanner scanner;
     private readonly Display display;
 
-    public SaleOrderHandler(Scanner scanner, Display display, Dictionary<string, string> pricesByProductCode) {
+    public SaleOrderHandler(Scanner scanner, Display display, Catalog catalog) {
         this.scanner = scanner;
         this.display = display;
-        this.pricesByProductCode = pricesByProductCode;
+        this.catalog = catalog;
     }
 
     public void Submit() {
-        string input = scanner.Input;
+        string productCode = scanner.Input;
 
-        if (string.IsNullOrEmpty(input))
+        if (string.IsNullOrEmpty(productCode))
             display.DisplayEmptyCode();
-        else if (input.Length != 13 || !long.TryParse(input, out _))
+        else if (productCode.Length != 13 || !long.TryParse(productCode, out _))
             display.DisplayInvalidCode();
-        else if (!pricesByProductCode.ContainsKey(input))
+        else if (!catalog.HasProduct(productCode))
             display.DisplayProductNotFound();
         else
-            display.DisplayPrice(GetPriceByProductCode(input));
+            display.DisplayPrice(catalog.GetPriceByProductCode(productCode));
     }
-
-    private string GetPriceByProductCode(string input) => pricesByProductCode[input];
 }
