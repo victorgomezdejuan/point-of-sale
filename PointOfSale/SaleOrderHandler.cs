@@ -17,7 +17,7 @@ public class SaleOrderHandler {
 
         if (string.IsNullOrEmpty(productCode))
             display.DisplayEmptyCode();
-        else if (productCode.Length != 13 || !long.TryParse(productCode, out _))
+        else if (!Product.IsCodeValid(productCode))
             display.DisplayInvalidCode();
         else if (!catalog.HasProduct(productCode))
             display.DisplayProductNotFound();
