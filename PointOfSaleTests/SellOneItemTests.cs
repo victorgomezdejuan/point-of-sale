@@ -11,7 +11,7 @@ public class SellOneItemTests {
 
     public SellOneItemTests() {
         pricesByProductCode = new() {
-            { "1234567890123", new Product("1234567890123", "5.25 €") }
+            { "1234567890123", new Product("1234567890123", new Price(5.25M, '€')) }
         };
         display = new();
         scanner = new();
@@ -47,7 +47,7 @@ public class SellOneItemTests {
         scanner.Scan("1234567890123");
         handler.Submit();
 
-        Assert.Equal("5.25 €", display.Text);
+        Assert.Equal("5,25 €", display.Text);
     }
 
     [Fact]

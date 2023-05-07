@@ -1,4 +1,7 @@
-﻿namespace PointOfSale;
+﻿using PointOfSale.Domain;
+using System.Globalization;
+
+namespace PointOfSale;
 public class Display {
     public string Text { get; private set; }
 
@@ -8,7 +11,9 @@ public class Display {
 
     public void DisplayEmptyCode() => DisplayContent("Error: Empty code");
 
-    public void DisplayPrice(string formattedPrice) => DisplayContent(formattedPrice);
+    public void DisplayPrice(Price price) {
+        DisplayContent(price.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + price.Currency);
+    }
 
     public void DisplayInvalidCode() => DisplayContent("Error: Invalid code");
 

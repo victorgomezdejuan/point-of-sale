@@ -6,5 +6,5 @@ public class Catalog {
 
     public bool HasProduct(string input) => pricesByProductCode.ContainsKey(input);
 
-    public string GetPriceByProductCode(string input) => pricesByProductCode[input].Price;
+    public Price GetPriceByProductCode(string input) => pricesByProductCode[input].Price;
 }

@@ -2,9 +2,9 @@
 public class Product {
     public string Code { get; private set; }
 
-    public string Price { get; private set; }
+    public Price Price { get; private set; }
 
-    public Product(string code, string price) {
+    public Product(string code, Price price) {
         Code = code;
         Price = price;
     }
