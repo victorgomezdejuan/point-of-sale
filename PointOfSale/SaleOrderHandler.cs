@@ -2,40 +2,39 @@
 
 namespace PointOfSale;
 public class SaleOrderHandler {
-    private readonly Catalog catalog;
-    private readonly Scanner scanner;
-    private readonly Display display;
+    private readonly Catalog _catalog;
+    private readonly Scanner _scanner;
+    private readonly Display _display;
     private readonly List<Price> _prices;
 
     public SaleOrderHandler(Scanner scanner, Display display, Catalog catalog) {
-        this.scanner = scanner;
-        this.display = display;
-        this.catalog = catalog;
+        _scanner = scanner;
+        _display = display;
+        _catalog = catalog;
         _prices = new();
     }
 
     public void SubmitItem() {
-        string productCode = scanner.Input;
+        string productCode = _scanner.Input;
 
         if (string.IsNullOrEmpty(productCode))
-            display.DisplayEmptyCode();
+            _display.DisplayEmptyCode();
         else if (!Product.IsCodeValid(productCode))
-            display.DisplayInvalidCode();
-        else if (!catalog.HasProduct(productCode))
-            display.DisplayProductNotFound();
+            _display.DisplayInvalidCode();
+        else if (!_catalog.HasProduct(productCode))
+            _display.DisplayProductNotFound();
         else {
-            Price price = catalog.GetPriceByProductCode(productCode);
+            Price price = _catalog.GetPriceByProductCode(productCode);
             _prices.Add(price);
-            display.DisplayPrice(price);
+            _display.DisplayPrice(price);
         }
-
     }
 
     public void SubmitTotal() {
         if (_prices.Count == 0)
-            display.DisplayNoItemsToSale();
+            _display.DisplayNoItemsToSale();
         else {
-            display.DisplayTotal(CalculateTotal(_prices));
+            _display.DisplayTotal(CalculateTotal(_prices));
         }
     }
 
