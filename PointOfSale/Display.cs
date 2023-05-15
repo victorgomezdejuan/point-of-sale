@@ -13,7 +13,7 @@ public class Display {
 
     public void DisplayPrice(Price price) => DisplayContent(FormatPrice(price));
 
-    private static string FormatPrice(Price price) => price.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + price.Currency;
+    public static string FormatPrice(Price price) => price.Value.ToString("N2", CultureInfo.GetCultureInfo("es-ES")) + " " + price.Currency;
 
     public void DisplayInvalidCode() => DisplayContent("Error: Invalid code");
 
