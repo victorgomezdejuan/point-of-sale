@@ -79,4 +79,24 @@ public class SellMultipleItemsTests {
 
         Assert.Equal("Total: 23,73 €", _display.Text);
     }
+
+    [Fact]
+    public void MultipleScans_OneProductNotFound() {
+        var pricesByProductCode = new Dictionary<string, Product> {
+            { "1234567890123", new Product("1234567890123", new Price(2.11M, '€')) },
+            { "1234567890124", new Product("1234567890124", new Price(1M, '€')) },
+            { "1234567890125", new Product("1234567890125", new Price(25.77M, '€')) }
+        };
+        SaleOrderHandler handler = new(_scanner, _display, new Catalog(pricesByProductCode));
+
+        _scanner.Scan("1234567890123");
+        handler.SubmitItem();
+        _scanner.Scan("Non existing product in catalog");
+        handler.SubmitItem();
+        _scanner.Scan("1234567890125");
+        handler.SubmitItem();
+        handler.SubmitTotal();
+
+        Assert.Equal("Total: 27,88 €", _display.Text);
+    }
 }
