@@ -11,9 +11,9 @@ public class Display {
 
     public void DisplayEmptyCode() => DisplayContent("Error: Empty code");
 
-    public void DisplayPrice(Price price) {
-        DisplayContent(price.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + price.Currency);
-    }
+    public void DisplayPrice(Price price) => DisplayContent(FormatPrice(price));
+
+    private static string FormatPrice(Price price) => price.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + price.Currency;
 
     public void DisplayInvalidCode() => DisplayContent("Error: Invalid code");
 
@@ -21,7 +21,5 @@ public class Display {
 
     public void DisplayNoItemsToSale() => DisplayContent("Error: No items to sale");
 
-    public void DisplayTotal(Price total) {
-        DisplayContent("Total: " + total.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + total.Currency);
-    }
+    public void DisplayTotal(Price total) => DisplayContent("Total: " + FormatPrice(total));
 }
