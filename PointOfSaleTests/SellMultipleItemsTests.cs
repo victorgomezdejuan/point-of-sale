@@ -24,7 +24,7 @@ public class SellMultipleItemsTests {
     public void OneScan_ProductNotFound() {
         SaleOrderHandler handler = new(_scanner, _display, new Catalog(new Dictionary<string, Product>()));
 
-        _scanner.Scan("Not found product");
+        _scanner.Scan("1234567890111");
         handler.SubmitItem();
         handler.SubmitTotal();
 
@@ -49,11 +49,11 @@ public class SellMultipleItemsTests {
     public void MultipleScans_AllProductsNotFound() {
         SaleOrderHandler handler = new(_scanner, _display, new Catalog(new Dictionary<string, Product>()));
 
-        _scanner.Scan("Product not found");
+        _scanner.Scan("1234567890111");
         handler.SubmitItem();
-        _scanner.Scan("Another product not found");
+        _scanner.Scan("1234567890222");
         handler.SubmitItem();
-        _scanner.Scan("And another product not found");
+        _scanner.Scan("1234567890333");
         handler.SubmitItem();
         handler.SubmitTotal();
 
@@ -91,7 +91,7 @@ public class SellMultipleItemsTests {
 
         _scanner.Scan("1234567890123");
         handler.SubmitItem();
-        _scanner.Scan("Non existing product in catalog");
+        _scanner.Scan("1234567890111");
         handler.SubmitItem();
         _scanner.Scan("1234567890125");
         handler.SubmitItem();
@@ -118,5 +118,27 @@ public class SellMultipleItemsTests {
         handler.SubmitTotal();
 
         Assert.Equal("Total: 27,88 €", _display.Text);
+    }
+
+    [Fact]
+    public void MultipleScans_AllOfThemAreDisplayed() {
+        var pricesByProductCode = new Dictionary<string, Product> {
+            { "1234567890123", new Product("1234567890123", new Price(2.11M, '€')) },
+            { "1234567890124", new Product("1234567890124", new Price(5M, '€')) },
+            { "1234567890125", new Product("1234567890125", new Price(25.77M, '€')) }
+        };
+        SaleOrderHandler handler = new(_scanner, _display, new Catalog(pricesByProductCode));
+
+        _scanner.Scan("1234567890123");
+        handler.SubmitItem();
+        Assert.Equal("2,11 €", _display.Text);
+
+        _scanner.Scan("1234567890111");
+        handler.SubmitItem();
+        Assert.Equal("Error: Product not found", _display.Text);
+
+        _scanner.Scan("1234567890125");
+        handler.SubmitItem();
+        Assert.Equal("25,77 €", _display.Text);
     }
 }
