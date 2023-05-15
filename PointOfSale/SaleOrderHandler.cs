@@ -5,13 +5,13 @@ public class SaleOrderHandler {
     private readonly Catalog catalog;
     private readonly Scanner scanner;
     private readonly Display display;
-    private Price? _price;
+    private readonly List<Price> _prices;
 
     public SaleOrderHandler(Scanner scanner, Display display, Catalog catalog) {
         this.scanner = scanner;
         this.display = display;
         this.catalog = catalog;
-        _price = null;
+        _prices = new();
     }
 
     public void SubmitItem() {
@@ -24,17 +24,27 @@ public class SaleOrderHandler {
         else if (!catalog.HasProduct(productCode))
             display.DisplayProductNotFound();
         else {
-            _price = catalog.GetPriceByProductCode(productCode);
-            display.DisplayPrice(_price);
+            Price price = catalog.GetPriceByProductCode(productCode);
+            _prices.Add(price);
+            display.DisplayPrice(price);
         }
 
     }
 
     public void SubmitTotal() {
-        if (_price is null)
+        if (_prices.Count == 0)
             display.DisplayNoItemsToSale();
         else {
-            display.DisplayTotal(_price);
+            display.DisplayTotal(CalculateTotal(_prices));
         }
+    }
+
+    private Price CalculateTotal(List<Price> prices) {
+        decimal total = 0;
+
+        foreach (Price price in prices)
+            total += price.Value;
+
+        return new Price(total, prices[0].Currency);
     }
 }
