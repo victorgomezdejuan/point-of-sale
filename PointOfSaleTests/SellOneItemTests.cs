@@ -20,7 +20,7 @@ public class SellOneItemTests {
     [Fact]
     public void EmptyCode() {
         scanner.Scan("");
-        handler.Submit();
+        handler.SubmitItem();
 
         Assert.Equal("Error: Empty code", display.Text);
     }
@@ -28,7 +28,7 @@ public class SellOneItemTests {
     [Fact]
     public void InvalidCode_Length() {
         scanner.Scan(new string('1', 12));
-        handler.Submit();
+        handler.SubmitItem();
 
         Assert.Equal("Error: Invalid code", display.Text);
     }
@@ -36,7 +36,7 @@ public class SellOneItemTests {
     [Fact]
     public void InvalidCode_NoInteger() {
         scanner.Scan(new string('a', 13));
-        handler.Submit();
+        handler.SubmitItem();
 
         Assert.Equal("Error: Invalid code", display.Text);
     }
@@ -44,7 +44,7 @@ public class SellOneItemTests {
     [Fact]
     public void ProductFound() {
         scanner.Scan("1234567890123");
-        handler.Submit();
+        handler.SubmitItem();
 
         Assert.Equal("5,25 €", display.Text);
     }
@@ -52,7 +52,7 @@ public class SellOneItemTests {
     [Fact]
     public void ProductNotFound() {
         scanner.Scan("1234567890124");
-        handler.Submit();
+        handler.SubmitItem();
 
         Assert.Equal("Error: Product not found", display.Text);
     }

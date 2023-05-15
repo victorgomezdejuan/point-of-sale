@@ -12,7 +12,7 @@ public class SaleOrderHandler {
         this.catalog = catalog;
     }
 
-    public void Submit() {
+    public void SubmitItem() {
         string productCode = scanner.Input;
 
         if (string.IsNullOrEmpty(productCode))
@@ -23,5 +23,9 @@ public class SaleOrderHandler {
             display.DisplayProductNotFound();
         else
             display.DisplayPrice(catalog.GetPriceByProductCode(productCode));
+    }
+
+    public void SubmitTotal() {
+        display.DisplayNoItemsToSale();
     }
 }

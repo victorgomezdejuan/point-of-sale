@@ -18,4 +18,6 @@ public class Display {
     public void DisplayInvalidCode() => DisplayContent("Error: Invalid code");
 
     public void DisplayProductNotFound() => DisplayContent("Error: Product not found");
+
+    public void DisplayNoItemsToSale() => DisplayContent("Error: No items to sale");
 }
