@@ -32,14 +32,31 @@ public class SellMultipleItemsTests {
         Display display = new();
         Scanner scanner = new();
         var pricesByProductCode = new Dictionary<string, Product> {
-            { "11111", new Product("11111", new Price(5.43M, '€')) }
+            { "1234567890123", new Product("1234567890123", new Price(5.43M, '€')) }
         };
         SaleOrderHandler handler = new(scanner, display, new Catalog(pricesByProductCode));
 
-        scanner.Scan("11111");
+        scanner.Scan("1234567890123");
         handler.SubmitItem();
         handler.SubmitTotal();
 
         Assert.Equal("Total: 5,43 €", display.Text);
+    }
+
+    [Fact(Skip = "Skip")]
+    public void MultipleScans_AllProductsNotFound() {
+        Display display = new();
+        Scanner scanner = new();
+        SaleOrderHandler handler = new(scanner, display, new Catalog(new Dictionary<string, Product>()));
+
+        scanner.Scan("Product not found");
+        handler.SubmitItem();
+        scanner.Scan("Another product not found");
+        handler.SubmitItem();
+        scanner.Scan("And another product not found");
+        handler.SubmitItem();
+        handler.SubmitTotal();
+
+        Assert.Equal("Error: No items to sale", display.Text);
     }
 }

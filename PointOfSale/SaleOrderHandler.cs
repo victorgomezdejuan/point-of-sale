@@ -5,32 +5,36 @@ public class SaleOrderHandler {
     private readonly Catalog catalog;
     private readonly Scanner scanner;
     private readonly Display display;
-    private string _productCode;
+    private Price? _price;
 
     public SaleOrderHandler(Scanner scanner, Display display, Catalog catalog) {
         this.scanner = scanner;
         this.display = display;
         this.catalog = catalog;
+        _price = null;
     }
 
     public void SubmitItem() {
-        _productCode = scanner.Input;
+        string productCode = scanner.Input;
 
-        if (string.IsNullOrEmpty(_productCode))
+        if (string.IsNullOrEmpty(productCode))
             display.DisplayEmptyCode();
-        else if (!Product.IsCodeValid(_productCode))
+        else if (!Product.IsCodeValid(productCode))
             display.DisplayInvalidCode();
-        else if (!catalog.HasProduct(_productCode))
+        else if (!catalog.HasProduct(productCode))
             display.DisplayProductNotFound();
-        else
-            display.DisplayPrice(catalog.GetPriceByProductCode(_productCode));
+        else {
+            _price = catalog.GetPriceByProductCode(productCode);
+            display.DisplayPrice(_price);
+        }
+
     }
 
     public void SubmitTotal() {
-        if (string.IsNullOrEmpty(_productCode))
+        if (_price is null)
             display.DisplayNoItemsToSale();
         else {
-            display.DisplayTotal(catalog.GetPriceByProductCode(_productCode));
+            display.DisplayTotal(_price);
         }
     }
 }
