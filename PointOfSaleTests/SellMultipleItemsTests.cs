@@ -43,7 +43,7 @@ public class SellMultipleItemsTests {
         Assert.Equal("Total: 5,43 €", display.Text);
     }
 
-    [Fact(Skip = "Skip")]
+    [Fact]
     public void MultipleScans_AllProductsNotFound() {
         Display display = new();
         Scanner scanner = new();
