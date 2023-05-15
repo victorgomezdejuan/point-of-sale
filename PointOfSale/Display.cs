@@ -20,4 +20,8 @@ public class Display {
     public void DisplayProductNotFound() => DisplayContent("Error: Product not found");
 
     public void DisplayNoItemsToSale() => DisplayContent("Error: No items to sale");
+
+    public void DisplayTotal(Price total) {
+        DisplayContent("Total: " + total.Value.ToString("0.00", CultureInfo.GetCultureInfo("es-ES")) + " " + total.Currency);
+    }
 }

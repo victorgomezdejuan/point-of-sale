@@ -26,4 +26,20 @@ public class SellMultipleItemsTests {
 
         Assert.Equal("Error: No items to sale", display.Text);
     }
+
+    [Fact]
+    public void OneScan_ProductFound() {
+        Display display = new();
+        Scanner scanner = new();
+        var pricesByProductCode = new Dictionary<string, Product> {
+            { "11111", new Product("11111", new Price(5.43M, '€')) }
+        };
+        SaleOrderHandler handler = new(scanner, display, new Catalog(pricesByProductCode));
+
+        scanner.Scan("11111");
+        handler.SubmitItem();
+        handler.SubmitTotal();
+
+        Assert.Equal("Total: 5,43 €", display.Text);
+    }
 }
